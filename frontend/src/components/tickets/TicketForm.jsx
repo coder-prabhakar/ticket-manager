@@ -62,6 +62,8 @@ export const TicketForm = ({ form, onFormSubmit, initialValues, isSubmitting }) 
 
                 <Form.Item name="task_assigned_to" label="Assign To">
                     <Select 
+                        mode="multiple"
+                        maxTagCount="responsive"
                         showSearch={{ optionFilterProp: 'label' }}
                         placeholder="Assign To a Member"
                         options={MembersForDDL} 

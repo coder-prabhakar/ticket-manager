@@ -19,9 +19,27 @@
     }
 }
 
+@media (min-width: 1024px) {
+    .sidebar {
+        width: 256px;
+    }
+
+    .sidebar.open {
+        width: max-content;
+    }
+
+    .sidebar.open .item-title,
+    .sidebar.open .header-title,
+    .sidebar.open .profile-details 
+    {
+        display: none;
+    }
+}
+
 /* Sidebar */
 @media (max-width: 1023px) {
     .sidebar {
+        width: 256px;
         position: absolute;
         top: 0;
         left: 0;
@@ -30,7 +48,7 @@
         transition: margin-left .3s ease;
     }
 
-    .sidebar.sidebar-active {
+    .sidebar.open {
         margin-left: 0;
     }
 }

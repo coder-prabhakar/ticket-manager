@@ -8,17 +8,18 @@ import { MdRemoveRedEye, MdEdit } from "react-icons/md";
 import { Modal, Checkbox, Table, Button, Dropdown, Space } from 'antd';
 
 const columns = [
-    { title: 'Customer Code', dataIndex: 'customer_code', key: 'customer_code' },
-    { title: 'Customer Name', dataIndex: 'customer_name', key: 'customer_name' },
-    { title: 'Project Name', dataIndex: 'project_name', key: 'project_name', 
+    { title: 'Customer', dataIndex: 'customer_name', key: 'customer_name' },
+    { title: 'Project', dataIndex: 'project_name', key: 'project_name', 
         render: (value) => value ? value : "-"
     },
-    { title: 'Task Title', dataIndex: 'task_title', key: 'task_title' },
-    { title: 'Member Code', dataIndex: 'member_code', key: 'member_code', 
-        render: (value) => value ? value : "-"
+    { title: 'Title', dataIndex: 'task_title', key: 'task_title', 
+        render: (v) => <div className='max-w-sm line-clamp-3'>{v}</div>
     },
-    { title: 'Member Name', dataIndex: 'member_name', key: 'member_name', 
-        render: (value) => value ? value : "-"
+    { title: 'Description', dataIndex: 'task_description', key: 'task_description', 
+        render: (v) => <div className='max-w-md line-clamp-3'>{v}</div>
+    },
+    { title: 'Assign To', dataIndex: 'assigned_member_name', key: 'assigned_member_name', 
+        render: (v) => <div className='max-w-sm line-clamp-3'>{v ? v : "Not Assign"}</div>
     },
     { title: 'Status', dataIndex: 'task_status', key: 'task_status',
         render: (status) => <StatusBadge status={status}/> 
@@ -50,13 +51,13 @@ const defaultCheckedList = [
     "customer_name",
     "project_name",
     "task_title",
-    "member_name",
+    "assigned_member_name",
     "task_status",
     "total_days"
 ];
 
 
-export const TicketTable = ({ isReportpage, isLoading, data, showAlert, setUpdate, setIsFormOpen }) => {
+export const TicketTable = ({ isLoading, data, showAlert, setUpdate, setIsFormOpen }) => {
     const [previewTicket, setPreviewTicket] = useState(null);
     
     const [open, setOpen] = useState(false);
@@ -127,17 +128,15 @@ export const TicketTable = ({ isReportpage, isLoading, data, showAlert, setUpdat
                                <MdRemoveRedEye className='text-lg'/>
                             </Button>
 
-                            {!isReportpage && (
-                                <Button 
-                                    color="gold" variant="solid" size="medium" 
-                                    onClick={() => {
-                                        setUpdate(record);
-                                        setIsFormOpen(true);
-                                    }}
-                                >
-                                    <MdEdit className='text-lg'/>
-                                </Button>
-                            )}
+                            <Button 
+                                color="gold" variant="solid" size="medium" 
+                                onClick={() => {
+                                    setUpdate(record);
+                                    setIsFormOpen(true);
+                                }}
+                            >
+                                <MdEdit className='text-lg'/>
+                            </Button>
                         </div>
                     )
                 }]} 

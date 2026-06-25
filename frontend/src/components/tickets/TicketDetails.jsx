@@ -15,12 +15,16 @@ export const TicketDetails = ({ ticket }) => {
         task_description, 
         customer_name, 
         project_name, 
-        member_name, 
+        assigned_member_name, 
+        created_by_name,
+        total_days,
         created_at, 
         task_deadline, 
         completed_at, 
         task_status
     } = ticket || {};
+
+    console.log(ticket)
 
     const { statusListForDDL } = useData();
 
@@ -48,11 +52,13 @@ export const TicketDetails = ({ ticket }) => {
                 </div>
 
                 {/* Metadata Grid Layout */}
-                <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 pt-2">
+                <div className="flex flex-wrap gap-4 pt-2">
                     {[
                         { label: 'Customer', value: customer_name || "N/A" },
                         { label: 'Project', value: project_name || "N/A" },
-                        { label: 'Assign To', value: member_name || "N/A" },
+                        { label: 'Assign To', value: assigned_member_name || "N/A" },
+                        { label: 'Assign By', value: created_by_name || "N/A" },
+                        { label: 'Days Taken', value: total_days > 1 ? total_days + ' Days' : total_days + ' Day' },
                         { label: 'Created At', value: created_at ? dayjs(created_at).format("DD MMM YYYY") : "N/A" },
                         { label: 'Deadline', value: task_deadline ? dayjs(task_deadline).format("DD MMM YYYY") : "N/A" },
                         { label: 'Completed At', value: completed_at ? dayjs(completed_at).format("DD MMM YYYY") : "N/A" },
@@ -64,7 +70,7 @@ export const TicketDetails = ({ ticket }) => {
                             "N/A" 
                         },
                     ].map(({ label, value }) => (
-                        <div key={label} className="bg-slate-50/50 border border-slate-100 rounded-lg p-3">
+                        <div key={label} className="bg-slate-50/50 border border-slate-100 rounded-lg py-3 px-4">
                             <span className="block text-[11px] font-medium uppercase tracking-wider text-slate-400 mb-1">
                                 {label}
                             </span>

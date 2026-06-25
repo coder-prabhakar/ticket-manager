@@ -1,31 +1,25 @@
 import { poolPromise, sql } from "../config/db.js";
 
 
-// helper
-const toNull = (value) => {
-    if (value === undefined || value === null || value === "") {
-        return null;
-    }
-    return value;
-};
-
-
-// ---------------------------------------------------
-// Task Report
-// ---------------------------------------------------
 export const getTaskReport = async (req, res) => {
     try {
         let { role, code } = req.user;
-        let { from_date, to_date, task_customer_code, task_assigned_to } = req.body;
+        let { from_date, to_date, customers, members, task_status } = req.body;
+
+        const toCSV = (val) => {
+            if (Array.isArray(val)) return val.length > 0 ? val.join(",") : "all";
+            return val || null;
+        };
 
         const pool = await poolPromise;
 
         const result = await pool
             .request()
-            .input("from_date", sql.Date, toNull(from_date))
-            .input("to_date", sql.Date, toNull(to_date))
-            .input("task_customer_code", sql.VarChar, role === "customer" ? code : toNull(task_customer_code))
-            .input("task_assigned_to", sql.VarChar, role === "admin" || role === "customer" ? toNull(task_assigned_to) : code)
+            .input("from_date", sql.Date, from_date || null)
+            .input("to_date", sql.Date, to_date || null)
+            .input("customers", sql.VarChar, role === "customer" ? code : toCSV(customers))
+            .input("members", sql.VarChar, role === "admin" || role === "customer" ? toCSV(members) : code)
+            .input("task_status", sql.VarChar, toCSV(task_status))
             .execute("sp_tasks_report");
 
         res.status(200).json(result.recordset);

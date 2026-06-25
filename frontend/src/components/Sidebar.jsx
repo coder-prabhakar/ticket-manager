@@ -18,7 +18,7 @@ const SidebarItem = ({ path, icon, name }) => {
             }`}
         >
             <span className="text-xl">{icon}</span>
-            <span className="font-medium tracking-wide">{name}</span>
+            <span className="item-title font-medium tracking-wide">{name}</span>
         </NavLink>
     )
 };
@@ -37,19 +37,20 @@ export default function Sidebar({ userRole }) {
     };
 
     return (
-        <aside className={`sidebar ${sidebarActive ? "sidebar-active" : ""} h-dvh w-64 flex flex-col bg-[#060426]`}>
-            {/*===== Toggle Button =====*/}
-            <button 
-                className="lg:hidden absolute top-4 left-68 h-10 w-10 rounded-lg text-2xl bg-[#060426] text-white cursor-pointer flex items-center justify-center"
-                onClick={() => setSidebarActive((prev) => !prev)}
-            >
-                {sidebarActive ? <IoClose /> : <IoMenu />}
-            </button>
-            
+        <aside className={`sidebar h-dvh flex flex-col bg-[#060426] ${sidebarActive ? "open" : "close"}`}>
             {/*===== Header =====*/}
-            <div className="h-18 p-4 border-b border-slate-800 text-xl flex items-center justify-center gap-1.5">
-                <span className='font-semibold text-primary'>Ticket</span>
-                <span className="font-semibold text-white ">Manager</span>
+            <div className="h-18 p-4 border-b border-slate-800 text-xl flex items-center justify-between gap-3">
+                <h1 className="header-title">
+                    <span className='font-semibold text-primary'>Ticket</span>&nbsp;
+                    <span className="font-semibold text-white ">Manager</span>
+                </h1>
+
+                <button 
+                    onClick={() => setSidebarActive((prev) => !prev)}
+                    className="text-2xl text-white cursor-pointer" 
+                >
+                    <IoMenu />
+                </button>
             </div>
 
             {/*===== Navbar =====*/}
@@ -57,7 +58,7 @@ export default function Sidebar({ userRole }) {
                 {[
                     { name: 'Dashboard', icon: <FiGrid size={20}/>, path: '/dashboard' },
                     { name: 'Tickets', icon: <FiCheckSquare size={20}/>, path: '/tickets' },
-                    // { name: 'Reports', icon: <TbReportSearch size={20}/>, path: '/reports' },
+                    { name: 'Reports', icon: <TbReportSearch size={20}/>, path: '/reports' },
                 ].map(
                     (item) => <SidebarItem key={item.name} {...item} />
                 )}
@@ -88,7 +89,7 @@ export default function Sidebar({ userRole }) {
                     className="w-full p-4 flex items-center gap-4 text-slate-300 hover:bg-red-900/20 hover:text-red-400 cursor-pointer transition-all duration-300"
                 >
                     <FiLogOut size={20} />
-                    <span className="font-medium tracking-wide">Logout</span>
+                    <span className="item-title font-medium tracking-wide">Logout</span>
                 </button>
             </div>
 
@@ -96,12 +97,12 @@ export default function Sidebar({ userRole }) {
             {data?.user && (
                 <div className="border-t border-slate-800 p-4 flex items-center gap-3">
                     {/* Avatar Section */}
-                    <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold shadow-sm">
+                    <div className="h-8 w-8 rounded-md bg-blue-600 flex items-center justify-center text-white font-semibold shadow-sm">
                         {getInitials(name)}
                     </div>
 
                     {/* User Details */}
-                    <div className="flex flex-col overflow-hidden">
+                    <div className="profile-details flex flex-col overflow-hidden">
                         <span className="text-sm font-semibold text-white truncate">
                             {name}
                         </span>

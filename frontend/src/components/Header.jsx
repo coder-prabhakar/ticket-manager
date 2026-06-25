@@ -6,7 +6,7 @@ const { Title } = Typography;
 
 export const Header = ({ children }) => {
     return (
-        <div className="min-h-18 pl-14 lg:pl-0 py-4 flex items-center justify-between flex-wrap gap-2">
+        <div className="min-h-18 pl-14 py-4 flex items-center justify-between flex-wrap gap-2">
             {children}
         </div>
     )

@@ -43,6 +43,11 @@ export const createTask = async (req, res) => {
             task_status
         } = req.body;
 
+        // Array ko comma-separated string me convert karna
+        const assigned_to_string = Array.isArray(task_assigned_to) 
+            ? [...task_assigned_to].sort().join(',') 
+            : (task_assigned_to || null);
+
         const pool = await poolPromise;
 
         const result = await pool
@@ -52,7 +57,7 @@ export const createTask = async (req, res) => {
             .input("task_description", sql.VarChar, task_description ?? null)
             .input("task_customer_code", sql.VarChar, role === "customer" ? code : task_customer_code)
             .input("task_project_id", sql.Int, task_project_id ?? null)
-            .input("task_assigned_to", sql.VarChar, task_assigned_to ?? null)
+            .input("task_assigned_to", sql.VarChar(sql.MAX), assigned_to_string)
             .input("created_at", sql.Date, created_at)
             .input("task_deadline", sql.Date, task_deadline ?? null)
             .input("completed_at", sql.Date, completed_at ?? null)
@@ -94,6 +99,11 @@ export const updateTask = async (req, res) => {
             task_status
         } = req.body;
 
+        // Array ko comma-separated string me convert karna
+        const assigned_to_string = Array.isArray(task_assigned_to) 
+            ? [...task_assigned_to].sort().join(',') 
+            : (task_assigned_to || null);
+
         const pool = await poolPromise;
 
         const result = await pool
@@ -104,7 +114,7 @@ export const updateTask = async (req, res) => {
             .input("task_description", sql.VarChar, task_description ?? null)
             .input("task_customer_code", sql.VarChar, role === "customer" ? code : task_customer_code)
             .input("task_project_id", sql.Int, task_project_id ?? null)
-            .input("task_assigned_to", sql.VarChar, task_assigned_to ?? null)
+            .input("task_assigned_to", sql.VarChar(sql.MAX), assigned_to_string)
             .input("created_at", sql.Date, created_at)
             .input("task_deadline", sql.Date, task_deadline ?? null)
             .input("completed_at", sql.Date, completed_at ?? null)

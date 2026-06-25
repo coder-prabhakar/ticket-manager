@@ -12,6 +12,9 @@ import reportRoutes from "./src/routes/report.routes.js";
 import contactRoutes from "./src/routes/contact.routes.js";
 import projectRoutes from "./src/routes/project.routes.js";
 
+// WHATSAPP BACKGROUND WORKER IMPORT HERE
+import "./src/utils/whatsappWorker.js";
+
 dotenv.config();
 
 const app = express();
