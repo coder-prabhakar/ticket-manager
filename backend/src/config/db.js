@@ -3,8 +3,8 @@ import sql from "mssql";
 const config = {
     user: "sa",
     password: "V2sk@#v2sk",
-    server: "DESKTOP-E1S12D5",
-    database: "TaskManagerDB",
+    server: "DESKTOP-CPKJU73",
+    database: "New_TicketManagerDB",
     options: {
         encrypt: false,
         trustServerCertificate: true,
