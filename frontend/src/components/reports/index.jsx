@@ -164,7 +164,7 @@ export default function Reports() {
                 </Form.Item>
 
                 <div className='flex items-end gap-2 mb-6'>
-                    <Button type="primary" htmlType="submit" disabled={isLoading}>Submit</Button>
+                    <Button type="primary" htmlType="submit" loading={isLoading} disabled={isLoading}>Submit</Button>
                     <Button htmlType="reset">Reset</Button>
                 </div>
             </Form>
