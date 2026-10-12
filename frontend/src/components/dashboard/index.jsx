@@ -1,18 +1,14 @@
 import { useAlert } from "../../utils/useAlert.jsx";
 import { useData } from "../../context/DataContext.jsx";
 
-import { Header, Heading } from "../Header.jsx";
+import { useEffect } from "react";
 import { AiFillProfile } from "react-icons/ai";
+import { Header, Heading } from "../Header.jsx";
 import { Spin, Result, Table, Button, Typography, DatePicker, Divider, Form } from 'antd';
 import { FaRegCircle, FaCircleHalfStroke, FaCircleCheck, FaCircleXmark } from "react-icons/fa6";
 
-const { Title } = Typography;
-
-
 export default function Dashboard() {
     const { alertComponent, showAlert } = useAlert();
-
-    // showAlert("error", "title", "description");
     
     const { 
         user, 
@@ -24,7 +20,8 @@ export default function Dashboard() {
         setToDate, 
         DashboardStats, 
         MembersForDDL, 
-        CustomersForDDL 
+        CustomersForDDL, 
+        refetch 
     } = useData();
 
     const cards = [
@@ -64,6 +61,12 @@ export default function Dashboard() {
         setFromDate(null) 
         setToDate(null)
     };
+
+    useEffect(() => {
+        refetch();
+        
+        return () => { handleReset() };
+    }, []);
 
     if (isLoading) return (
         <div className='h-full w-full flex items-center justify-center'>
