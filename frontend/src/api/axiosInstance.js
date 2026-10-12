@@ -2,8 +2,8 @@ import axios from "axios";
 import { getDataFromLocalStorage } from "../utils/localStorage.js";
 
 const axiosInstance = axios.create({
-    // baseURL: "http://192.168.1.37:5000",
-    baseURL: "http://localhost:5000",
+    baseURL: "http://192.168.1.30:5000",
+    // baseURL: "http://localhost:5000",
 });
 
 axiosInstance.interceptors.request.use((config) => {
